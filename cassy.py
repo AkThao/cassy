@@ -14,26 +14,33 @@ messages = [
     }
 ]
 
-# Obtain audio from the microphone
-r = sr.Recognizer()
-with sr.Microphone() as source:
-    print("Say something....")
-    audio = r.listen(source)
 
-# Try to transcribe audio using Whisper API through SpeechRecognition module
-try:
-    print(r.recognize_whisper_api(audio, api_key=openai.api_key))
-except sr.RequestError as e:
-    print("Could not request results from Whisper API")
+def listen_to_voice_input():
+    # Obtain audio from the microphone
+    r = sr.Recognizer()
+    with sr.Microphone() as source:
+        print("Say something....")
+        audio = r.listen(source)
+
+    # Try to transcribe audio using Whisper API through SpeechRecognition module
+    try:
+        speech_to_text = r.recognize_whisper_api(audio, api_key=openai.api_key)
+        return speech_to_text
+    except sr.RequestError as e:
+        print("Could not request results from Whisper API")
+        return None
 
 # The conversation loop
 # The loop will end when the user says "STOP"
 # After every message, save the response to the messages array to be included in the next prompt
 # This is how the model "remembers" the conversation
 while True:
-    user_input = input("Prompt: ")
-    if (user_input == "STOP"):
+    # user_input = input("Prompt: ")
+    user_input = listen_to_voice_input()
+    if (user_input == None or user_input.strip(".").upper() == "STOP"):
         break
+
+    print(user_input)
 
     user_message = {
         "role": "user",
