@@ -1,4 +1,5 @@
 import openai
+import speech_recognition as sr
 
 with open(".env", "r") as env_file:
     key = env_file.read()
@@ -12,6 +13,18 @@ messages = [
         "content": "You are a friendly, chatty and useful chatbot that can answer questions and provide advice when needed."
     }
 ]
+
+# Obtain audio from the microphone
+r = sr.Recognizer()
+with sr.Microphone() as source:
+    print("Say something....")
+    audio = r.listen(source)
+
+# Try to transcribe audio using Whisper API through SpeechRecognition module
+try:
+    print(r.recognize_whisper_api(audio, api_key=openai.api_key))
+except sr.RequestError as e:
+    print("Could not request results from Whisper API")
 
 # The conversation loop
 # The loop will end when the user says "STOP"
