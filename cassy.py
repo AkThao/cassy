@@ -9,7 +9,7 @@ with open(".env", "r") as env_file:
 messages = [
     {
         "role": "system",
-        "content": "You are a useful chatbot that can answer questions concisely and provide advice when needed."
+        "content": "You are a friendly, chatty and useful chatbot that can answer questions and provide advice when needed."
     }
 ]
 
