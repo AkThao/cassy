@@ -10,16 +10,19 @@ with open(".env", "r") as env_file:
 messages = [
     {
         "role": "system",
-        "content": "You are a friendly, chatty and useful chatbot that can answer questions and provide advice when needed."
+        "content": "You are Cassy. You are a friendly, chatty and useful chatbot that can answer questions and provide advice when needed."
     }
 ]
+
+
+STOP_WORD = "GOODBYE"
 
 
 def listen_to_voice_input():
     # Obtain audio from the microphone
     r = sr.Recognizer()
     with sr.Microphone() as source:
-        print("Say something....")
+        print("\n> ", end="")
         audio = r.listen(source)
 
     # Try to transcribe audio using Whisper API through SpeechRecognition module
@@ -35,12 +38,10 @@ def listen_to_voice_input():
 # After every message, save the response to the messages array to be included in the next prompt
 # This is how the model "remembers" the conversation
 while True:
-    # user_input = input("Prompt: ")
     user_input = listen_to_voice_input()
-    if (user_input == None or user_input.strip(".").upper() == "STOP"):
-        break
-
     print(user_input)
+    if (user_input == None):
+        break
 
     user_message = {
         "role": "user",
@@ -57,5 +58,7 @@ while True:
     response = completion.choices[0].message
     messages.append(response)
 
-    print("Response: " + response.content)
+    print("Cassy: " + response.content)
 
+    if (user_input.strip(".").upper() == STOP_WORD):
+        break
