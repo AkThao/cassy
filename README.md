@@ -1,2 +1,3 @@
-# cassy
-Chatty Assistance System
+# CASSY
+
+A Chatty And Smart System
