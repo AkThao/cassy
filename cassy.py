@@ -74,9 +74,13 @@ def send_message():
     return response
 
 
-def save_message(user_msg, response):
+def log_user_input(user_msg):
     with open("conversations.log", "a") as f:
         f.write(f"\n\n> {user_msg}")
+
+
+def log_cassy_response(response):
+    with open("conversations.log", "a") as f:
         f.write(f"\nCassy: " + response)
 
 
@@ -96,24 +100,25 @@ def save_user_input(user_input):
 with open("conversations.log", "a") as f:
     now = datetime.now()
     dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
-    f.write(f"\n\n__________\n{dt_string}")
+    f.write(f"\n\n__________\n{dt_string}\n")
 
+log_cassy_response(INTRO_MESSAGE)
 speak_message(INTRO_MESSAGE)
-save_message("", INTRO_MESSAGE)
 
 while True:
     user_input = listen_to_voice_input()
     if (user_input == ""):
         continue
     save_user_input(user_input)
+    log_user_input(user_input)
     print(user_input)
 
     response = send_message()
     messages.append(response)
     print("Cassy: " + response.content)
 
+    log_cassy_response(response.content)
     speak_message(response.content)
-    save_message(user_input, response.content)
 
     if (STOP_WORD in user_input.lower()):
         break
