@@ -55,7 +55,7 @@ def listen_to_voice_input():
         speech_to_text = r.recognize_whisper_api(audio, api_key=openai.api_key)
         return speech_to_text
     except sr.RequestError as e:
-        print("Could not request results from Whisper API")
+        print(f"ERROR: Could not request results from Whisper API. {e}")
         return None
 
 
