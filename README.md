@@ -32,4 +32,4 @@ This runs in an infinite loop, which keeps the conversation going until the user
 2. Set up an OpenAI account and get an API key
 3. Set up an AWS account, create an IAM user, add the polly:SynthesizeSpeech permission to that user and generate API keys for the user
 4. Copy .env.example to an .env file (must be in the same directory as cassy.py) and put all the API keys in there
-5. With the virtual environment activated, run python3 `cassy.py`
+5. With the virtual environment activated, run `python3 cassy.py`
